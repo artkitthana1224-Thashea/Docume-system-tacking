@@ -84,12 +84,12 @@ export function Dashboard({ userId }: { userId: string }) {
 
 function StatCard({ title, value, icon: Icon }: any) {
   return (
-    <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-      <div className="flex justify-between items-start mb-1">
-        <p className="text-xs text-slate-400 font-semibold uppercase">{title}</p>
-        <Icon size={16} className="text-slate-400" />
+    <div className="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm">
+      <div className="flex justify-between items-start mb-1 sm:mb-2">
+        <p className="text-[10px] sm:text-xs text-slate-400 font-semibold uppercase leading-tight">{title}</p>
+        <Icon size={16} className="text-slate-400 flex-shrink-0" />
       </div>
-      <h3 className="text-2xl font-bold text-slate-900">{value}</h3>
+      <h3 className="text-xl sm:text-2xl font-bold text-slate-900">{value}</h3>
     </div>
   );
 }

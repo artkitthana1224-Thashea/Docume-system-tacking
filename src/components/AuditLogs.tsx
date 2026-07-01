@@ -28,7 +28,7 @@ export function AuditLogs({ userId }: { userId: string }) {
       </div>
       
       <div className="overflow-x-auto flex-1">
-        <table className="w-full text-left text-sm text-slate-600">
+        <table className="w-full text-left text-sm text-slate-600 min-w-[600px]">
           <thead className="bg-slate-50 border-b border-slate-100">
             <tr>
               <th className="px-6 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Timestamp</th>

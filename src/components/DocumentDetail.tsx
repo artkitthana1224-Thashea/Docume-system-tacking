@@ -51,16 +51,16 @@ export function DocumentDetail({ id, userId, onBack, user }: { id: string, userI
 
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-12">
-      <div className="flex items-center justify-between">
-        <button onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-blue-600 text-[10px] font-bold uppercase tracking-wider transition-colors">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <button onClick={onBack} className="self-start flex items-center gap-2 text-slate-400 hover:text-blue-600 text-[10px] font-bold uppercase tracking-wider transition-colors">
           <ArrowLeft size={16} />
           Back to list
         </button>
-        <div className="flex gap-3">
-          <button className="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 px-3 py-1.5 rounded text-xs font-semibold hover:bg-slate-50">
+        <div className="flex gap-2 sm:gap-3">
+          <button className="flex-1 sm:flex-none justify-center flex items-center gap-2 bg-white border border-slate-200 text-slate-600 px-3 py-2 sm:py-1.5 rounded text-xs font-semibold hover:bg-slate-50">
             <Printer size={14} /> Print
           </button>
-          <button className="flex items-center gap-2 bg-white border border-slate-200 text-slate-600 px-3 py-1.5 rounded text-xs font-semibold hover:bg-slate-50">
+          <button className="flex-1 sm:flex-none justify-center flex items-center gap-2 bg-white border border-slate-200 text-slate-600 px-3 py-2 sm:py-1.5 rounded text-xs font-semibold hover:bg-slate-50">
             <Download size={14} /> Export PDF
           </button>
         </div>
@@ -69,31 +69,31 @@ export function DocumentDetail({ id, userId, onBack, user }: { id: string, userI
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Doc Info */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
+          <div className="bg-white p-4 sm:p-8 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
             {/* Watermark for draft/rejected */}
             {doc.status === "Rejected" && (
-              <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
-                <span className="text-8xl font-black uppercase rotate-[-30deg] text-red-500">REJECTED</span>
+              <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none overflow-hidden">
+                <span className="text-6xl sm:text-8xl font-black uppercase rotate-[-30deg] text-red-500 text-center leading-none">REJECTED</span>
               </div>
             )}
             
-            <div className="flex justify-between items-start mb-8">
-              <div>
-                <h1 className="text-2xl font-bold text-slate-900 mb-2">{doc.title}</h1>
-                <div className="flex items-center gap-4 text-xs font-mono">
-                  <span className="bg-slate-50 border border-slate-200 px-2 py-1 rounded text-slate-500 text-[10px] uppercase font-bold tracking-wider">Ref: {doc.runningNumber}</span>
+            <div className="flex flex-col-reverse sm:flex-row justify-between items-start mb-6 sm:mb-8 gap-4">
+              <div className="w-full">
+                <h1 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3 leading-tight">{doc.title}</h1>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs font-mono">
+                  <span className="inline-block bg-slate-50 border border-slate-200 px-2 py-1 rounded text-slate-500 text-[10px] uppercase font-bold tracking-wider w-fit">Ref: {doc.runningNumber}</span>
                   <span className="text-slate-400">Created: {format(new Date(doc.createdAt), "MMM d, yyyy")}</span>
                 </div>
               </div>
-              <div className="text-right flex flex-col items-end">
-                <div className="bg-white p-1.5 border border-slate-200 rounded inline-block mb-2">
+              <div className="flex sm:flex-col items-center sm:items-end gap-3 w-full sm:w-auto justify-between sm:justify-start bg-slate-50 sm:bg-transparent p-3 sm:p-0 rounded-lg">
+                <div className="bg-white p-1.5 border border-slate-200 rounded inline-block">
                   <QRCodeSVG value={`https://bank-dms.internal/doc/${doc.id}`} size={64} level="M" />
                 </div>
-                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Scan to Track</div>
+                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest text-right">Scan to Track</div>
               </div>
             </div>
 
-            <div className="prose prose-sm max-w-none text-slate-700 border-t border-b border-slate-100 py-6 min-h-[200px]">
+            <div className="prose prose-sm max-w-none text-slate-700 border-t border-b border-slate-100 py-6 min-h-[150px] sm:min-h-[200px]">
               {doc.content}
             </div>
 
@@ -121,23 +121,23 @@ export function DocumentDetail({ id, userId, onBack, user }: { id: string, userI
           
           {/* Approval Actions */}
           {canApprove && (
-            <div className="bg-blue-50 border border-blue-100 p-6 rounded-xl flex items-center justify-between">
+            <div className="bg-blue-50 border border-blue-100 p-4 sm:p-6 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <h3 className="font-bold text-blue-900">Approval Required</h3>
                 <p className="text-xs text-blue-700 mt-1">This document is pending your review as {user?.role}.</p>
               </div>
-              <div className="flex gap-3">
+              <div className="flex gap-2 w-full sm:w-auto">
                 <button 
                   onClick={() => handleAction('reject')}
-                  className="bg-white text-red-600 border border-red-200 hover:bg-red-50 px-4 py-2 rounded text-sm font-medium flex items-center gap-2 transition-colors"
+                  className="flex-1 sm:flex-none justify-center bg-white text-red-600 border border-red-200 hover:bg-red-50 px-3 sm:px-4 py-2 rounded text-sm font-medium flex items-center gap-2 transition-colors"
                 >
                   <X size={16} /> Reject
                 </button>
                 <button 
                   onClick={() => handleAction('approve')}
-                  className="bg-blue-700 text-white hover:bg-blue-800 px-4 py-2 rounded text-sm font-medium flex items-center gap-2 transition-colors shadow-sm"
+                  className="flex-1 sm:flex-none justify-center bg-blue-700 text-white hover:bg-blue-800 px-3 sm:px-4 py-2 rounded text-sm font-medium flex items-center gap-2 transition-colors shadow-sm"
                 >
-                  <Check size={16} /> Approve & Sign
+                  <Check size={16} /> Approve
                 </button>
               </div>
             </div>

@@ -10,6 +10,7 @@ import { DocumentList } from "./components/DocumentList";
 import { DocumentDetail } from "./components/DocumentDetail";
 import { DocumentForm } from "./components/DocumentForm";
 import { AuditLogs } from "./components/AuditLogs";
+import { SettingsView } from "./components/SettingsView";
 import { User } from "./types";
 
 export default function App() {
@@ -41,12 +42,25 @@ export default function App() {
     setViewDocId(null);
   };
 
+  const isListView = [
+    "loan-verify", "loan-incomplete", "loan-pending-sign", "loan-send-finance", "loan-track", "loan-history",
+    "finance-receive", "finance-verify", "finance-confirm", "finance-send-admin", "finance-sla", "finance-pending",
+    "contract-loan", "contract-borrow", "contract-mortgage", "contract-guarantee", "contract-poa", "contract-cert", "contract-support", "contract-history",
+    "cust-individual", "cust-corporate", "cust-guarantor", "cust-collateral", "cust-relations", "cust-history"
+  ].includes(activeTab);
+
+  const isSettingsView = activeTab.startsWith("set-") || activeTab.startsWith("master-") || activeTab.startsWith("prof-");
+
+  const formatTitle = (id: string) => {
+    return id.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+  };
+
   return (
     <Layout user={user} onUserChange={setUserId} activeTab={activeTab} onTabChange={handleTabChange}>
       {isCreating ? (
         <DocumentForm 
           userId={userId} 
-          onCancel={() => setIsCreating(false)} 
+          onCancel={() => handleTabChange("dashboard")} 
           onSuccess={(id) => {
             setIsCreating(false);
             setViewDocId(id);
@@ -56,8 +70,6 @@ export default function App() {
         <DocumentDetail id={viewDocId} userId={userId} user={user} onBack={() => setViewDocId(null)} />
       ) : activeTab === "dashboard" ? (
         <Dashboard userId={userId} />
-      ) : activeTab === "loan-verify" || activeTab === "finance-receive" || activeTab === "finance-verify" || activeTab === "finance-confirm" || activeTab === "finance-sla" || activeTab === "loan-history" || activeTab === "finance-pending" ? (
-        <DocumentList userId={userId} onViewDoc={handleViewDoc} onCreateDoc={handleCreateDoc} />
       ) : activeTab === "loan-create" ? (
         <DocumentForm 
           userId={userId} 
@@ -66,9 +78,13 @@ export default function App() {
             setViewDocId(id);
           }} 
         />
+      ) : isListView ? (
+        <DocumentList userId={userId} onViewDoc={handleViewDoc} onCreateDoc={handleCreateDoc} />
+      ) : isSettingsView ? (
+        <SettingsView title={formatTitle(activeTab)} />
       ) : (
         <div className="flex flex-col items-center justify-center h-64 text-slate-400 bg-white border border-slate-200 rounded-xl border-dashed">
-          <p className="text-sm font-medium">This module is under construction.</p>
+          <p className="text-sm font-medium">This module ({activeTab}) is under construction.</p>
         </div>
       )}
     </Layout>

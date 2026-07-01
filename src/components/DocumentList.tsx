@@ -20,8 +20,8 @@ export function DocumentList({ userId, onViewDoc, onCreateDoc }: { userId: strin
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl flex flex-col h-full overflow-hidden mb-6">
-      <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-white">
-        <div className="relative w-64">
+      <div className="px-4 md:px-6 py-4 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white">
+        <div className="relative w-full sm:w-64">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
           <input 
             type="text" 
@@ -31,7 +31,7 @@ export function DocumentList({ userId, onViewDoc, onCreateDoc }: { userId: strin
         </div>
         <button 
           onClick={onCreateDoc}
-          className="flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded text-sm font-medium transition-colors"
+          className="flex items-center justify-center gap-2 w-full sm:w-auto bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded text-sm font-medium transition-colors"
         >
           <Plus size={16} />
           New Document
@@ -39,7 +39,7 @@ export function DocumentList({ userId, onViewDoc, onCreateDoc }: { userId: strin
       </div>
       
       <div className="overflow-x-auto flex-1">
-        <table className="w-full text-left text-sm text-slate-600">
+        <table className="w-full text-left text-sm text-slate-600 min-w-[700px]">
           <thead className="bg-slate-50 border-b border-slate-100">
             <tr>
               <th className="px-6 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Running No.</th>
